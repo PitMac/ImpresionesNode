@@ -23,7 +23,7 @@ export async function factura(printer, data) {
 
     if (reporte.establecimiento.numeroestablecimiento != "001") {
       printer.text(reporte.establecimiento.nombre);
-      printer.text(`SUC: ${data.reporte.establecimiento.direccion}`);
+      printer.text(`SUC: ${reporte.establecimiento.direccion}`);
     }
 
     printer.align("lt");
@@ -198,7 +198,7 @@ export async function factura(printer, data) {
 
       if (reporte.establecimiento.numeroestablecimiento != "001") {
         printer.text(reporte.establecimiento.nombre);
-        printer.text(`SUC: ${data.reporte.establecimiento.direccion}`);
+        printer.text(`SUC: ${reporte.establecimiento.direccion}`);
       }
 
       printer.align("lt");

@@ -52,6 +52,17 @@ export function printFactura(req, res) {
           prueba(printer, data);
         } else if (data.tipo === "ORDEN-VENTA") {
           ordenventa(printer, data);
+        } else if (data.tipo === "prueba") {
+          printer.text(`Esto es una prueba`);
+          printer.text("De como se imprime");
+          printer.text(`Esto es una prueba`);
+          printer.text("De como se imprime");
+
+          printer.newLine();
+          printer.newLine();
+          printer.newLine();
+          printer.cut();
+          printer.close();
         }
       });
 
