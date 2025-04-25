@@ -34,17 +34,22 @@ export function printFactura(req, res) {
     } else {
       const device = new escpos.Network(ip);
       const printer = new escpos.Printer(device);
-      const items = [
-        { cant: "2", producto: "Coca Cola", precio: "1.50", total: "3.00" },
-        {
-          cant: "1",
-          producto: "Doritos Nacho Queso 150g",
-          precio: "2.00",
-          total: "2.00",
-        },
-      ];
+
       device.open(() => {
-        factura(printer, { ...data, items });
+        if (data.tipo === null) {
+          factura(printer, data);
+        } else if (data.tipo === "prueba") {
+          printer.text(`Esto es una prueba`);
+          printer.text("De como se imprime");
+          printer.text(`Esto es una prueba`);
+          printer.text("De como se imprime");
+
+          printer.newLine();
+          printer.newLine();
+          printer.newLine();
+          printer.cut();
+          printer.close();
+        }
       });
 
       return res.json({ message: `Impresión enviada a la IP ${ip}` });
