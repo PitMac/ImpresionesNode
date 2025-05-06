@@ -2,10 +2,10 @@ import express from "express";
 import cors from "cors";
 import printRoutes from "./src/routes/print.routes.js";
 const app = express();
-const port = 3001;
+const port = 3002;
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "10mb" }));
 
 app.use(printRoutes);
 
