@@ -50,9 +50,12 @@ export async function cierre(printer, dat) {
 
   let totalFacturas = 0;
   let totalTarjetas = 0;
+  let totalAutoconsumo = 0;
 
   data.pagos.forEach((detalle) => {
-    if (detalle.abreviatura !== "TAR") {
+    if (detalle.autoconsumo) {
+      totalAutoconsumo += parseFloat(detalle.valorpago);
+    } else if (detalle.abreviatura !== "TAR") {
       totalFacturas += parseFloat(detalle.valorpago);
     } else {
       totalTarjetas += parseFloat(detalle.valorpago);
@@ -113,9 +116,13 @@ export async function cierre(printer, dat) {
 
   printer.drawLine();
 
+  printer.table(["TOTAL AUTOCONSUMOS", `${totalAutoconsumo.toFixed(2)}`]);
   printer.table(["TOTAL EFECTIVO", `${totalFacturas.toFixed(2)}`]);
-  printer.table(["TOTAL EFECTIVO", `${data.egresos}`]);
-  printer.table(["DIFERENCIA", `${(totalFacturas - data.egresos).toFixed(2)}`]);
+  printer.table(["TOTAL EGRESOS", `${data.egresos}`]);
+  printer.table([
+    "DIFERENCIA",
+    `${(totalFacturas + totalAutoconsumo - data.egresos).toFixed(2)}`,
+  ]);
 
   printer.drawLine();
 
